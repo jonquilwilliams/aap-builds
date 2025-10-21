@@ -449,7 +449,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#integration-workflows">1.1.2. Integration workflows</a>
 <ul class="sectlevel4">
 <li><a href="#_ansible_initiated_workflow">Ansible-initiated workflow</a></li>
-<li><a href="#_terraform_community_edition_migration_workflow"><strong>Terraform Community Edition migration workflow:</strong></a></li>
+<li><a href="#_terraform_community_edition_migration_workflows">Terraform Community Edition migration workflows</a></li>
 <li><a href="#_terraform_initiated_workflow">Terraform-initiated workflow</a></li>
 </ul>
 </li>
@@ -460,7 +460,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#terraform-hashicorp-authenticating">1.2.1. Authenticating to <code>hashicorp.terraform</code></a>
 <ul class="sectlevel4">
 <li><a href="#creating-custom-credential-type">Creating a custom credential type</a></li>
-<li><a href="#creating-a-credential">Creating a credential</a></li>
+<li><a href="#terraform-creating-credential">Creating a credential</a></li>
 </ul>
 </li>
 <li><a href="#cloud-terraform-integrating">1.2.2. Integrating with <code>cloud.terraform</code></a>
@@ -566,9 +566,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>This collection provides API integration between Ansible Automation Platform and Terraform. This solution works natively with Ansible Automation Platform and reduces setup complexity because it doesn’t require a binary installation and it includes a default execution environment.</p>
 </div>
 <div class="paragraph">
-<p>If you are already using the <code>cloud.terraform</code> collection, we recommend migrating to the <code>hashicorp.terraform</code> collection to take advantage of the API capabilities.</p>
-</div>
-<div class="paragraph">
 <p><strong>cloud.terraform collection</strong></p>
 </div>
 <div class="paragraph">
@@ -579,12 +576,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect4">
-<h5 id="_terraform_community_edition_migration_workflow"><strong>Terraform Community Edition migration workflow:</strong></h5>
+<h5 id="_terraform_community_edition_migration_workflows">Terraform Community Edition migration workflows</h5>
 <div class="paragraph">
-<p>Community edition users can migrate to Terraform Enterprise or HCP Terraform, and then integrate the Ansible Automation Platform capabilities.</p>
-</div>
-<div class="paragraph">
-<p>This migration workflow uses the the <code>cloud.terraform</code> (CLI) collection. However, we recommend using the <code>hashicorp.terraform</code> (API) collection instead to take advantage of its API capabilities.</p>
+<p>Community edition users can migrate to Terraform Enterprise or HCP Terraform, and then integrate the Ansible Automation Platform capabilities using the <code>cloud.terraform</code> (CLI) collection. However, we recommend using the <code>hashicorp.terraform</code> (API) collection instead.</p>
 </div>
 <div class="paragraph">
 <p>If you are already using the <code>cloud.terraform</code> collection, you can migrate to <code>hashicorp.terraform</code>.</p>
@@ -674,7 +668,7 @@ TF_TOKEN:  ‘{{ token }}’</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="creating-a-credential">Creating a credential</h5>
+<h5 id="terraform-creating-credential">Creating a credential</h5>
 <div class="paragraph _abstract">
 <p>Users must create a credential to use with job templates in Ansible Automation Platform.</p>
 </div>
@@ -791,13 +785,13 @@ TF_TOKEN_app_terraform_io:   ‘{{ token }}’</pre>
 <p>To create an instance of your new credential type, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Credentials</b></span></strong> page, and select <b class="button">Create credential</b>.</p>
 </li>
 <li>
-<p>From the <strong>Credential type</strong> drop-down list, select the name of the credential type you created earlier.</p>
+<p>From the <strong>Credential type</strong>, select the name of the credential type you created earlier.</p>
 </li>
 <li>
 <p>In the <strong>Token</strong> field, enter the Terraform API token.</p>
 </li>
 <li>
-<p>(Optional) Edit the <strong>Description</strong> and select the TF organization from the <strong>Organization</strong> drop-down list.</p>
+<p>(Optional) Edit the <strong>Description</strong> and select the TF organization from the <strong>Organization</strong> list.</p>
 </li>
 <li>
 <p>Click <b class="button">Save credential</b>.</p>
