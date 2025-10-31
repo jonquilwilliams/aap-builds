@@ -15,3 +15,4 @@ For example:
 * https://jonquilwilliams.github.io/aap-builds/terraform-aap-getting-started-AAP-50523-NEW-2025-10-22.html
 * https://jonquilwilliams.github.io/aap-builds/terraform-aap-getting-started-AAP-50523-NEW-2025-10-24.html
 * https://jonquilwilliams.github.io/aap-builds/terraform-aap-getting-started-AAP-50523-NEW-2025-10-27.html
+* https://jonquilwilliams.github.io/aap-builds/terraform-aap-getting-started-AAP-57378-2025-10-31.html
