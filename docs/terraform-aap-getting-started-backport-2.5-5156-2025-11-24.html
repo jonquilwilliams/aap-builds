@@ -1,0 +1,3364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.23">
+<title>Getting started with HashiCorp and Ansible Automation Platform</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left Role ARG Spec">
+<div id="header">
+<h1>Getting started with HashiCorp and Ansible Automation Platform</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#providing-feedback">Providing feedback on Red Hat documentation</a></li>
+<li><a href="#terraform-product">1. Terraform integration</a>
+<ul class="sectlevel2">
+<li><a href="#terraform-introduction">1.1. About the Terraform integration</a>
+<ul class="sectlevel3">
+<li><a href="#introduction">1.1.1. Introduction</a></li>
+<li><a href="#integration-workflows">1.1.2. Integration workflows</a>
+<ul class="sectlevel4">
+<li><a href="#_ansible_initiated_workflow">Ansible-initiated workflow</a></li>
+<li><a href="#_migration_workflows">Migration workflows</a></li>
+<li><a href="#_terraform_initiated_workflow">Terraform-initiated workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#terraform-integrating-from-aap">1.2. Integrating from Ansible Automation Platform</a>
+<ul class="sectlevel3">
+<li><a href="#terraform-hashicorp-authenticating">1.2.1. Authenticating to hashicorp.terraform</a>
+<ul class="sectlevel4">
+<li><a href="#creating-custom-credential-type">Creating a custom credential type</a></li>
+<li><a href="#terraform-creating-credential">Creating a credential</a></li>
+</ul>
+</li>
+<li><a href="#cloud-terraform-integrating">1.2.2. Integrating with cloud.terraform</a>
+<ul class="sectlevel4">
+<li><a href="#cloud-terraform-creating-credential">Creating a credential</a></li>
+<li><a href="#cloud-terraform-building-execution-environment">Building an execution environment in Ansible Automation Platform</a></li>
+<li><a href="#cloud-terraform-creating-launching-job-template">Creating and launching a job template</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#migrating-from-other-versions">1.3. Migrating from other versions</a>
+<ul class="sectlevel3">
+<li><a href="#migrating-from-cloud-terraform">1.3.1. Migrating from <code>cloud.terraform</code> to <code>hashicorp.terraform</code></a>
+<ul class="sectlevel4">
+<li><a href="#configuring-config-version-module">Configuring the <code>hashicorp.terraform.configuration_version</code> module</a></li>
+<li><a href="#configuring-run-module">Configuring the <code>hashicorp.terraform.run</code> module</a></li>
+<li><a href="#terraform-migration-examples">Migration examples for <code>hashicorp.terraform</code> modules</a></li>
+</ul>
+</li>
+<li><a href="#terraform-migrating-from-community-terraform">1.3.2. Migrating from Terraform Community Edition</a>
+<ul class="sectlevel4">
+<li><a href="#terraform-migrating-from-community">Migrating from the community edition</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#terraform-integrating-from-terraform">1.4. Integrating from Terraform</a>
+<ul class="sectlevel3">
+<li><a href="#terraform-provider-configuring">1.4.1. Configuring the provider</a></li>
+<li><a href="#terraform-using-tf-actions">1.4.2. Using TF Actions and Ansible Automation Platform</a>
+<ul class="sectlevel4">
+<li><a href="#about-tf-actions-and-aap">About Terraform Actions and Ansible Automation Platform</a></li>
+<li><a href="#terraform-provider-tf-actions-direct-job">Using TF Actions as a direct job</a></li>
+<li><a href="#terraform-using-tf-actions-eda">Using TF Actions with Event-Driven Ansible</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#vault-product">2. Vault integration</a>
+<ul class="sectlevel2">
+<li><a href="#vault-introduction">2.1. About the Vault integration</a>
+<ul class="sectlevel3">
+<li><a href="#vault-intro">2.1.1. Introduction</a></li>
+</ul>
+</li>
+<li><a href="#vault-authenticating">2.2. Authenticating to <code>hashicorp.vault</code></a>
+<ul class="sectlevel3">
+<li><a href="#vault-auth-architecture">2.2.1. Authentication architecture</a></li>
+<li><a href="#vault-creating-credential-type">2.2.2. Creating a custom credential type</a></li>
+<li><a href="#vault-creating-custom-credential">2.2.3. Creating a custom credential</a></li>
+</ul>
+</li>
+<li><a href="#vault-migrating-from-community-hashi-vault">2.3. Migrating from <code>community.hashi_vault</code></a>
+<ul class="sectlevel3">
+<li><a href="#vault-kv1-modules">2.3.1. Configuring KV1 modules</a>
+<ul class="sectlevel4">
+<li><a href="#vault-configuring-kv1-secret">Configuring the <code>hashicorp.vault.kv1_secret</code> module</a></li>
+<li><a href="#vault-configuring-kv1-secret-info">Configuring the <code>hashicorp.vault.kv1_secret_info</code> module</a></li>
+<li><a href="#vault-configuring-kv1-secret-get-lookup">Configuring the <code>hashicorp.vault.kv1_secret_get</code> lookup plugin</a></li>
+<li><a href="#vault-migration-examples-kv1-secret-info">Migration example for the <code>hashicorp.vault.kv1_secret_info</code> module</a></li>
+<li><a href="#vault-migration-examples-kv1-secret-get-lookup">Migration example for the <code>hashicorp.vault.kv1_secret_get</code> lookup</a></li>
+</ul>
+</li>
+<li><a href="#vault-kv2-modules">2.3.2. Configuring KV2 modules</a>
+<ul class="sectlevel4">
+<li><a href="#vault-configuring-kv2-secret">Configuring the <code>hashicorp.vault.kv2_secret</code> module</a></li>
+<li><a href="#vault-configuring-kv2-secret-info">Configuring the <code>hashicorp.vault.kv2_secret_info</code> module</a></li>
+<li><a href="#vault-configuring-kv2-secret-get-lookup">Configuring the <code>hashicorp.vault.kv2_secret_get</code> lookup plugin</a></li>
+<li><a href="#vault-migration-examples-kv2-secret-module">Migration examples for the <code>hashicorp.vault.kv2_secret</code> module</a></li>
+<li><a href="#vault-migration-examples-kv2-secret-info">Migration examples for the <code>hashicorp.vault.kv2_secret_info</code> module</a></li>
+<li><a href="#vault-migration-examples-kv2-secret-get-lookup">Migration examples for the <code>hashicorp.vault.kv2_secret_get</code> lookup</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="providing-feedback">Providing feedback on Red Hat documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you have a suggestion to improve this documentation, or find an error, you can contact technical support at <a href="https://access.redhat.com">https://access.redhat.com</a> to open a request.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="terraform-product">1. Terraform integration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="terraform-introduction">1.1. About the Terraform integration</h3>
+<div class="paragraph _abstract">
+<p>Learn about the supported integrations between IBM HashiCorp products and Red Hat Ansible Automation Platform, the integration workflows, and migration paths to help determine the best options for your environment.</p>
+</div>
+<div class="sect3">
+<h4 id="introduction">1.1.1. Introduction</h4>
+<div class="paragraph _abstract">
+<p>Many organizations find themselves using both Ansible Automation Platform and Terraform Enterprise or HCP Terraform, recognizing that these can work in harmony to create an improved experience for developers and operations teams.</p>
+</div>
+<div class="paragraph">
+<p>While Terraform Enterprise and HCP Terraform excel at Infrastructure as Code (IaC) for provisioning and de-provisioning cloud resources, Ansible Automation Platform is a versatile, all-purpose automation solution ideal for configuration management, application deployment, and orchestrating complex IT workflows across diverse domains.</p>
+</div>
+<div class="paragraph">
+<p>This integration directly addresses common challenges such as managing disparate automation tools, ensuring consistent configuration across hybrid cloud environments and accelerating deployment cycles. By bringing together Terraform&#8217;s declarative approach to infrastructure provisioning with Ansible Automation Platform&#8217;s procedural approach to configuration and orchestration, users can achieve:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Optimized costs:</strong> Reduce cloud waste, minimize manual processes, and combat tool sprawl. This integration can lead to a significant reduction in infrastructure costs and a high return on investment.</p>
+</li>
+<li>
+<p><strong>Reduced risk:</strong> Lower the risk of breaches, enforce policies, and significantly decrease unplanned downtime. The ability to review Terraform plan output before applying it in a workflow, with approval steps, enhances security and compliance.</p>
+</li>
+<li>
+<p><strong>Faster time to value:</strong> Boost developer productivity and deploy new compute resources more rapidly, leading to a faster time to market. This is achieved through unified lifecycle management and automation for Day 0 (provisioning), Day 1 (configuration), and Day 2 (ongoing management) operations.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By enabling direct calls between Ansible Automation Platform and Terraform Enterprise or HCP Terraform, organizations can unlock time to value by creating combined workflows, reduce risk through enhanced product integrations, and enhance Infrastructure-as-Code with Ansible Automation Platform content and practices. This allows for unified lifecycle management, enabling tasks from initial provisioning and configuration to ongoing health checks, incident response, patching, and infrastructure optimization.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="integration-workflows">1.1.2. Integration workflows</h4>
+<div class="paragraph _abstract">
+<p>Depending on your existing setup, you can integrate these products from Ansible Automation Platform or from Terraform. Migration paths are provided for community users and for migrating from the <code>cloud.terraform</code> collection to <code>hashicorp.terraform</code>.</p>
+</div>
+<div class="sect4">
+<h5 id="_ansible_initiated_workflow">Ansible-initiated workflow</h5>
+<div class="paragraph">
+<p>Ansible automation hub collections allow Ansible Automation Platform users to leverage the Terraform Enterprise or HCP Terraform provisioning capabilities.</p>
+</div>
+<div class="paragraph">
+<p><strong>hashicorp.terraform collection</strong></p>
+</div>
+<div class="paragraph">
+<p>This collection provides API integration between Ansible Automation Platform and Terraform Enterprise or HCP Terraform. This solution works natively with Ansible Automation Platform and reduces setup complexity because it doesn’t require a binary installation and it includes a default execution environment.</p>
+</div>
+<div class="paragraph">
+<p><strong>cloud.terraform collection</strong></p>
+</div>
+<div class="paragraph">
+<p>This collection provides CLI integration between Ansible Automation Platform and Terraform Enterprise or HCP Terraform. To use this collection, you must install a binary and create an execution environment.</p>
+</div>
+<div class="paragraph">
+<p>Although this collection is supported, we recommend using the <code>hashicorp.terraform</code> collection instead to take advantage of its API capabilities.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_migration_workflows">Migration workflows</h5>
+<div class="paragraph">
+<p>Community edition users can migrate to Terraform Enterprise or HCP Terraform, and then integrate the Ansible Automation Platform capabilities using the <code>cloud.terraform</code> (CLI) collection. However, we recommend using the <code>hashicorp.terraform</code> (API) collection instead.</p>
+</div>
+<div class="paragraph">
+<p>If you are already using the <code>cloud.terraform</code> collection, you can migrate to <code>hashicorp.terraform</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_terraform_initiated_workflow">Terraform-initiated workflow</h5>
+<div class="paragraph">
+<p>For existing Terraform Enterprise or HCP Terraform users, Terraform can directly call Ansible Automation Platform at the end of provisioning for a more seamless and secure workflow. This enables Terraform Enterprise or HCP Terraform users to enhance their immutable infrastructure automation with Ansible Automation Platform Day 2 automation capabilities and manage infrastructure updates and lifecycle events.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="terraform-integrating-from-aap">1.2. Integrating from Ansible Automation Platform</h3>
+<div class="paragraph _abstract">
+<p>As an administrator, you configure the integration from Ansible Automation Platform user interface. Use the procedures related to the collection you have installed.</p>
+</div>
+<div class="sect3">
+<h4 id="terraform-hashicorp-authenticating">1.2.1. Authenticating to hashicorp.terraform</h4>
+<div class="paragraph _abstract">
+<p>After installing or migrating to <code>hashicorp.terraform</code>, administrators configure a custom credential type in the Ansible Automation Platform user interface to authenticate to Terraform Enterprise or HCP Terraform. Then users create credentials to use with job templates in Ansible Automation Platform.</p>
+</div>
+<div class="sect4">
+<h5 id="creating-custom-credential-type">Creating a custom credential type</h5>
+<div class="paragraph _abstract">
+<p>Administrators set up a custom credential type to facilitate authentication between Ansible Automation Platform and Terraform Enterprise or HCP Terraform.</p>
+</div>
+<div class="paragraph">
+<p>This preparation helps ensure that credentials are provided automatically to the execution environment, eliminating the need to update playbooks manually.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, you can configure a custom credential for Vault to leverage the advanced features of Terraform Enterprise or HCP Terraform and Vault with Ansible Automation Platform.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have a <a href="https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens#user-api-tokens">Terraform API token</a>.</p>
+</li>
+<li>
+<p>Install the certified <a href="https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/terraform/"><code>hashicorp.terraform</code></a> collection from automation hub. (You need an Ansible subscription to access and download collections on automation hub.)</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to Ansible Automation Platform.</p>
+</li>
+<li>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Credential Types</b></span></strong>.</p>
+</li>
+<li>
+<p>Click <b class="button">Create credential type</b>. The <strong>Create Credential Type</strong> page opens and displays the <strong>Details</strong> tab.</p>
+</li>
+<li>
+<p>For the <strong>Name</strong> field, enter a credential type name.</p>
+</li>
+<li>
+<p>In the <strong>Input configuration</strong> field, enter the following parameters and values:</p>
+<div class="listingblock">
+<div class="content">
+<pre>fields:
+  - id: token
+    type: string
+    label: token
+    secret: true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the <strong>Injector configuration</strong> field, enter the following configuration:</p>
+<div class="listingblock">
+<div class="content">
+<pre>env:
+  TF_TOKEN:  ‘{{ token }}’</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To save your configuration, click <strong>Create Credential Type</strong> again. The new credential type is created.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Next step</div>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/terraform-product#terraform-creating-credential">Creating a credential</a></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="terraform-creating-credential">Creating a credential</h5>
+<div class="paragraph _abstract">
+<p>Users must create a credential to use with job templates in Ansible Automation Platform.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>You must have a <a href="https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens#user-api-tokens">Terraform API token</a>.</p>
+</li>
+<li>
+<p>Your administrator has created a custom credential type.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to Ansible Automation Platform.</p>
+</li>
+<li>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Credentials</b></span></strong>, and then select <b class="button">Create credential</b>.</p>
+</li>
+<li>
+<p>From the <strong>Credential type</strong> list, select the credential type. The fields that display depend on the credential type.</p>
+</li>
+<li>
+<p>In the <strong>Token</strong> field, enter the Terraform API token.</p>
+</li>
+<li>
+<p>(Optional) Edit the <strong>Description</strong> field and select the TF organization from the <strong>Organization</strong> list.</p>
+</li>
+<li>
+<p>Click <b class="button">Save credential</b>. You are ready to use the credential in a job template.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cloud-terraform-integrating">1.2.2. Integrating with cloud.terraform</h4>
+<div class="paragraph _abstract">
+<p>When you integrate with <code>cloud.terraform</code>, you must create a credential, build an execution environment, and launch a job template in Ansible Automation Platform.</p>
+</div>
+<div class="sect4">
+<h5 id="cloud-terraform-creating-credential">Creating a credential</h5>
+<div class="paragraph _abstract">
+<p>You can set up credentials directly from the Ansible Automation Platform user interface. The credentials are provided to the execution environment and Ansible Automation Platform reads them from there. This eliminates the need to manually update each playbook.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You must have a <a href="https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens#user-api-tokens">Terraform API token</a>.</p>
+</li>
+<li>
+<p>Install the certified <a href="https://console.redhat.com/ansible/automation-hub/repo/published/cloud/terraform/"><code>cloud.terraform</code></a> collection from automation hub. (You need an Ansible subscription to access and download collections on automation hub.)</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to Ansible Automation Platform.</p>
+</li>
+<li>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Credential Types</b></span></strong>.</p>
+</li>
+<li>
+<p>Click <b class="button">Create credential type</b>. The <strong>Create Credential Type</strong> page opens and displays the <strong>Details</strong> tab.</p>
+</li>
+<li>
+<p>For the <strong>Credential Type</strong>, enter a name.</p>
+</li>
+<li>
+<p>In the <strong>Input configuration</strong> field, enter the following YAML parameter and values:</p>
+<div class="listingblock">
+<div class="content">
+<pre>fields:
+   - id: token
+     type: string
+     label: token
+     secret: true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>In the <strong>Injector configuration</strong> field, enter the following configuration.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For Terraform Enterprise, the hostname is the location where you have deployed TFE:</p>
+<div class="listingblock">
+<div class="content">
+<pre>env:
+  TF_TOKEN_&lt;hostname&gt;:  ‘{{ token }}’</pre>
+</div>
+</div>
+</li>
+<li>
+<p>For HCP Terraform, use:</p>
+<div class="listingblock">
+<div class="content">
+<pre>env:
+  TF_TOKEN_app_terraform_io:   ‘{{ token }}’</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>To save your configuration, click <b class="button">Create Credential Type</b> again. The new credential type is created.</p>
+</li>
+<li>
+<p>To create an instance of your new credential type, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Credentials</b></span></strong> page, and select <b class="button">Create credential</b>.</p>
+</li>
+<li>
+<p>From the <strong>Credential type</strong>, select the name of the credential type you created earlier.</p>
+</li>
+<li>
+<p>In the <strong>Token</strong> field, enter the Terraform API token.</p>
+</li>
+<li>
+<p>(Optional) Edit the <strong>Description</strong> and select the TF organization from the <strong>Organization</strong> list.</p>
+</li>
+<li>
+<p>Click <b class="button">Save credential</b>.</p>
+</li>
+</ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://developer.hashicorp.com/terraform/cli/config/config-file#environment-variable-credentials">Terraform CLI configuration</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="cloud-terraform-building-execution-environment">Building an execution environment in Ansible Automation Platform</h5>
+<div class="paragraph _abstract">
+<p>You must build an execution environment using the automation controller so that Ansible Automation Platform can provide the credentials necessary for using its automation features.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You need a pre-existing execution environment with the latest version of <code>cloud.terraform</code> collection before you can create it using an automation controller. You cannot use the default execution environment provided by Ansible Automation Platform because the default environment does not include the <code>terraform</code> CLI binary.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you have migrated from Terraform Community Edition, you can continue to use your existing execution environment and update it to the latest version of <code>cloud.terraform</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Install the <code>terraform</code> CLI binary in your pre-existing execution environment. See <strong>Additional resources</strong> below for a link to the binary.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Execution Environments</b></span></strong>.</p>
+</li>
+<li>
+<p>Click <b class="button">Create execution environment</b>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/ee-create-new.png" alt="Create a new execution environment page">
+</div>
+</div>
+</li>
+<li>
+<p>For <strong>Name</strong>, enter a name for your Ansible Automation Platform execution environment.</p>
+</li>
+<li>
+<p>For <strong>Image</strong>, enter the repository link to the image for your pre-existing execution environment.</p>
+</li>
+<li>
+<p>Click <b class="button">Create execution environment</b>. Your newly added execution environment is ready to be used in a job template.</p>
+</li>
+</ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://developer.hashicorp.com/terraform/install"><code>terraform</code> CLI binary</a></p>
+</li>
+<li>
+<p><a href="https://catalog.redhat.com/search?gs&amp;q=execution%20environments&amp;searchType=containers">Red Hat ecosystem catalog</a></p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/assembly-controller-execution-environments#proc-controller-use-an-exec-envi">Execution environments</a></p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/creating_and_using_execution_environments/index">Creating and using execution environments</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="cloud-terraform-creating-launching-job-template">Creating and launching a job template</h5>
+<div class="paragraph _abstract">
+<p>Create and launch a job template to complete the integration and use the automation features in Ansible Automation Platform.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Templates</b></span></strong>.</p>
+</li>
+<li>
+<p>Select <strong>Create template &gt; Create Job Template</strong>.</p>
+</li>
+<li>
+<p>From the <strong>Execution Environment</strong> list, select the environment you created.</p>
+</li>
+<li>
+<p>From the <strong>Credentials</strong> list, select the credentials instance you created previously. If you do not see the credentials, click <b class="button">Browse</b> to see more options in the list.</p>
+</li>
+<li>
+<p>Enter any additional information for the required fields.</p>
+</li>
+<li>
+<p>Click <b class="button">Create job template</b>.</p>
+</li>
+<li>
+<p>Click <b class="button">Launch template</b>.</p>
+</li>
+<li>
+<p>To launch the job, click <b class="button">Next</b> and <b class="button">Finish</b>. The job output shows that the job has run.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Verification</div>
+<p>To see that the job has run successfully from the Terraform user interface, select <strong>Workspaces &gt; Ansible-Content-Integration &gt; Run</strong>. The Run list shows the state of the Triggered via CLI job. You can see it go from the Queued to the Plan Finished state.</p>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/assembly-controller-execution-environments#proc-controller-use-an-exec-env">Adding an execution environment to a job template</a></p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/configuring_automation_execution/index">Configuring automation execution</a></p>
+</li>
+<li>
+<p><a href="https://developer.hashicorp.com/terraform/enterprise">Hashicorp Terraform Enterprise documentation</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="migrating-from-other-versions">1.3. Migrating from other versions</h3>
+<div class="paragraph _abstract">
+<p>Migrate from earlier collections or community editions to use the most advanced features of the HashiCorp and Ansible Automation Platform integrations.</p>
+</div>
+<div class="sect3">
+<h4 id="migrating-from-cloud-terraform">1.3.1. Migrating from <code>cloud.terraform</code> to <code>hashicorp.terraform</code></h4>
+<div class="paragraph _abstract">
+<p>If you are using the existing <code>cloud.terraform</code> (CLI-based) collection, you can migrate your existing playbooks to the <code>hashicorp.terraform</code> (API-based) collection. The main modules for <code>hashicorp.terraform</code> that you must configure are <code>hashicorp.terraform.configuration_version</code> and <code>hashicorp.terraform.run</code>.</p>
+</div>
+<div class="sect4">
+<h5 id="configuring-config-version-module">Configuring the <code>hashicorp.terraform.configuration_version</code> module</h5>
+<div class="paragraph _abstract">
+<p>To migrate to the <code>hashicorp.terraform</code> collection, you must configure the <code>hashicorp.terraform.configuration_version</code> module. This module manages configuration versions in Terraform Enterprise or HCP Terraform.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Install the Ansible Automation Platform certified <a href="https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/terraform/"><code>hashicorp.terraform</code></a> collection.</p>
+</li>
+<li>
+<p>Verify that a valid organization and workspace are correctly set up in Terraform Enterprise or HCP Terraform.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Replicate your automation tasks from the <code>cloud.terraform</code> modules.</p>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create configuration version with auto_queue_runs to false
+  hashicorp.terraform.configuration_version:
+   workspace_id: ws-1234
+   configuration_files_path: "/usr/home/tf"
+   auto_queue_runs: false
+   tf_validate_certs: true
+   poll_interval: 3
+   poll_timeout: 15
+   state: present</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the following required parameters:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>workspace_id</code> or <code>workspace</code> + <code>organization</code>:</strong> The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for <code>state: present</code>).</p>
+</li>
+<li>
+<p><strong><code>configuration_files_path</code>:</strong> The path where the required Terraform Enterprise or HCP Terraform files will be uploaded to create a configuration version (for <code>state: present</code>). The module accepts two file types for <code>configuration_files_path</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Directory:</strong> Any folder containing Terraform Enterprise or HCP Terraform files. The module auto-creates the .tar.gz file from all contents recursively.</p>
+</li>
+<li>
+<p><strong>.tar.gz Archive:</strong> Pre-compressed gzip tarball. The module validates TAR format and gzip compression.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong><code>configuration_version_id</code>:</strong> The configuration version ID that will be archived (<code>state: archived</code>). This action deletes the associated uploaded .tar.gz file. Note the following:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Only uploaded versions that were created using the API or CLI, have no active runs, and are not the current version for any workspace can be archived.</p>
+</li>
+<li>
+<p>When the <code>configuration_version_id</code> is unspecified, Terraform Enterprise or HCP Terraform selects the latest approved <code>configuration_version_id</code> in the workspace.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>auto_queue_runs:</strong> Determines if Terraform Enterprise or HCP Terraform automatically starts a run after the configuration upload (<code>true</code> by default) or requires manual initiation (<code>false</code>).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Set additional <a href="https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/terraform/content/module/configuration_version/">optional parameters</a> as needed.</p>
+</li>
+</ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/terraform-product#terraform-migration-examples">Migration examples for <code>hashicorp.terraform</code> modules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="configuring-run-module">Configuring the <code>hashicorp.terraform.run</code> module</h5>
+<div class="paragraph _abstract">
+<p>The <code>hashicorp.terraform.run</code> module lets you manage Terraform Enterprise or HCP Terraform runs using create, apply, cancel, and discard operations. You can trigger plans or apply operations on specified workspaces with customizable settings.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Ensure that a valid <a href="https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens">Terraform API token</a> is properly configured to authenticate with your Terraform Enterprise or HCP Terraform environment.</p>
+</li>
+<li>
+<p>Verify that a valid organization and workspace are correctly set up in Terraform Enterprise or HCP Terraform.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create a run module.</p>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create a destroy run with auto_apply
+  hashicorp.terraform.run:
+  workspace_id: ws-1234
+  run_message: "destroy vpc"
+  state: "present"
+  tf_token: &lt;your token&gt;
+  is_destroy: true
+  auto_apply: true
+  target_addrs:
+    - "aws_vpc.vpc1"
+    - "aws_vpc.vpc2"
+  poll: true
+  poll_interval: 10
+  poll_timeout: 30</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the following required parameters:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>workspace_id</code> or <code>workspace</code> + <code>organization</code>:</strong> The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for <code>state: present</code>).</p>
+</li>
+<li>
+<p><strong><code>run_id</code>:</strong> The unique identifier of the run to apply, cancel, or discard operations.</p>
+</li>
+<li>
+<p><strong><code>tf_token</code>:</strong> The Terraform API authentication token. If this value is not set, the <code>TF_TOKEN</code> environment variable is used.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(Optional) Configure the built-in polling options that determine the wait period for Terraform Enterprise or HCP Terraform operations to complete:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>poll: true</code>:</strong> (Default) Checks the run status every <code>poll_interval</code> seconds (default: 5s) until completion or <code>poll_timeout</code> (default: 25s) is reached, returning the final status.</p>
+</li>
+<li>
+<p><strong><code>poll: false</code>:</strong> Returns immediately after initiating the run without waiting.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Set additional <a href="https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/terraform/content/module/run/">optional parameters</a> as needed.</p>
+</li>
+</ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/terraform-product#terraform-migration-examples">Migration examples for <code>hashicorp.terraform</code> modules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="terraform-migration-examples">Migration examples for <code>hashicorp.terraform</code> modules</h5>
+<div class="paragraph _abstract">
+<p>These before and after examples help users understand how the modules can be configured in a real world environment.</p>
+</div>
+<div class="sect5">
+<h6 id="_example_1_plan_only">Example 1: Plan Only</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Before (<code>cloud.terraform.terraform</code>):</strong></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create a plan file using check mode
+  cloud.terraform.terraform:
+   force_init: true
+   project_path: "/usr/home/tf"
+   plan_file: "/usr/home/tf/terraform.tfplan"
+   state: present
+   check_mode: true
+   check_destroy: true
+   variables:
+     environment: prod</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>After (<code>hashicorp.terraform.*</code>):</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>configuration_version</code> module:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create configuration version with auto_queue_runs to false
+  hashicorp.terraform.configuration_version:
+   workspace_id: ws-1234
+   configuration_files_path: "usr/home/tf_files"
+   auto_queue_runs: false
+   tf_validate_certs: true
+   poll_interval: 5
+   poll_timeout: 10
+   state: present</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The <code>plan_only</code> run with the run module:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create a plan only run with variables
+  hashicorp.terraform.run:
+   workspace_id: ws-1234
+   run_message: "plan-only vpc creation"
+   poll: false
+   state: "present"
+   tf_token: "{{ tfc_token }}"
+   plan_only: true
+   variables:
+    - key: "env"
+      value: "production"</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_example_2_plan_and_apply">Example 2: Plan and apply</h6>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Before (<code>cloud.terraform.terraform</code>):</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Generate the plan:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Plan and Apply Workflow - Step 1 - Generate Plan
+  cloud.terraform.terraform:
+   force_init: true
+   project_path: "/usr/home/tf"
+   plan_file: "/usr/home/tf/workflow.tfplan"
+   state: present
+   check_mode: true
+   variables:
+     environment: prod</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the plan:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Plan and Apply Workflow - Step 2 - Apply Plan
+  cloud.terraform.terraform:
+   project_path:  "/usr/home/tf"
+   plan_file: "/usr/home/tf/workflow.tfplan"
+   state: present</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>After (<code>hashicorp.terraform.run</code>):</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The <code>configuration_version</code> module:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create configuration version with auto_queue_runs to false
+  hashicorp.terraform.configuration_version:
+   workspace_id: ws-1234
+   configuration_files_path: "usr/home/tf_files"
+   auto_queue_runs: false
+   tf_validate_certs: true
+   poll_interval: 5
+   poll_timeout: 10
+   state: present</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The run module with two options for plan and apply workflow:</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Option 1:</strong> Uses the <code>auto_apply</code> parameter to handle both the plan and apply workflows:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create a run with auto_apply
+  hashicorp.terraform.run:
+   workspace_id: ws-1234
+   run_message: "destroy vpc"
+   state: "present"
+   tf_token: "{{ tfc_token }}"
+   auto_apply: true
+   poll: true
+   poll_interval: 10
+   poll_timeout: 30</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Option 2:</strong> Uses two sub-steps to create a <code>save_plan</code> run and then apply it:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create the plan:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create a save plan run
+  hashicorp.terraform.run:
+   workspace_id: ws-1234
+   run_message: "save plan vpc creation"
+   state: "present"
+   tf_token: "{{ tfc_token }}"
+   poll: true
+   poll_interval: 10
+   poll_timeout: 30
+   save_plan: true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Apply the plan. You get the <code>run_id</code> from the output of the run module task:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Apply the save plan run
+  hashicorp.terraform.run:
+   run_id: run-1234
+   state: "applied"
+   tf_token: "{{ tfc_token }}"
+   poll: true
+   poll_interval: 10
+   poll_timeout: 30</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="terraform-migrating-from-community-terraform">1.3.2. Migrating from Terraform Community Edition</h4>
+<div class="paragraph _abstract">
+<p>If you want to use Ansible Automation Platform with Terraform Enterprise (TFE) or HCP Terraform and you are currently using Terraform Community Edition (TCE), you must migrate to TFE or HCP Terraform and then update Ansible Automation Platform configurations to work with TFE or HCP Terraform.</p>
+</div>
+<div class="sect4">
+<h5 id="terraform-migrating-from-community">Migrating from the community edition</h5>
+<div class="paragraph _abstract">
+<p>When you migrate from TCE to TFE or HCP Terraform, you are not migrating the collection itself. Instead, you are adapting your existing TCE usage to work with TFE or HCP Terraform.</p>
+</div>
+<div class="paragraph">
+<p>After you migrate, you must update the Ansible Automation Platform credentials, execution environment, and job templates.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>cloud.terraform</code> collection only supports the CLI-driven workflow in HCP Terraform.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Use the latest supported version of Terraform (1.11 or higher).</p>
+</li>
+<li>
+<p>Follow the <code>tf-migrate</code> CLI instructions under <strong>Additional resources</strong> below.</p>
+</li>
+<li>
+<p>Ensure that the HCP Terraform or TFE workspace is not set to automatically apply plans.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>To prevent errors when running playbooks against TFE or HCP Terraform, do the following actions before running a playbook:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Confirm that the Terraform version in the execution environment is the same as the version stated in TFE or HCP Terraform.</p>
+</li>
+<li>
+<p>Perform an initialization in TFE or HCP Terraform:</p>
+<div class="listingblock">
+<div class="content">
+<pre>terraform init</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If you have a local state file in your execution environment, delete the local state file.</p>
+</li>
+<li>
+<p>Get a token from HCP Terraform or Terraform Enterprise, which you will use to create the credential in a later step. Ensure the token has the necessary permissions based on the team or user token to execute the desired capabilities in the playbook.</p>
+</li>
+<li>
+<p>Remove the backend config and files from your playbook definition.</p>
+</li>
+<li>
+<p>Add the workspace within the default setting in your TF config or an environment variable if you want to define the workspace outside updating the playbook itself.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can add the workspace to your playbook to scale your workspace utilization.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>From the Ansible Automation Platform user interface:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/terraform-product#cloud-terraform-creating-credential">Create a credential</a>.</p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/terraform-product#cloud-terraform-building-execution-environment">Build an execution environment in Ansible Automation Platform</a>.</p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/terraform-product#cloud-terraform-creating-launching-job-template">Create and launch a job template</a>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>(Optional) After the migration is completed and verified, you can run the additional modules and plugins from the collection in your execution environment:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://console.redhat.com/ansible/automation-hub/repo/published/cloud/terraform/content/module/plan_stash/">Plan Stash module</a></p>
+</li>
+<li>
+<p><a href="https://console.redhat.com/ansible/automation-hub/repo/published/cloud/terraform/content/module/terraform/">Terraform module</a></p>
+</li>
+<li>
+<p><a href="https://console.redhat.com/ansible/automation-hub/repo/published/cloud/terraform/content/module/terraform_output/">Output plugin</a></p>
+</li>
+<li>
+<p><a href="https://console.redhat.com/ansible/automation-hub/repo/published/cloud/terraform/content/lookup/tf_output/">Output lookup plugin</a></p>
+</li>
+<li>
+<p><a href="https://console.redhat.com/ansible/automation-hub/repo/published/cloud/terraform/content/inventory/terraform_state/">State inventory plugin</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://developer.hashicorp.com/terraform/cloud-docs/migrate/tf-migrate"><code>tf-migrate</code> CLI instructions</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="terraform-integrating-from-terraform">1.4. Integrating from Terraform</h3>
+<div class="paragraph _abstract">
+<p>If you have already provisioned your environment from Terraform Enterprise, you can use the Terraform official provider to leverage Ansible Automation Platform automation capabilities.</p>
+</div>
+<div class="sect3">
+<h4 id="terraform-provider-configuring">1.4.1. Configuring the provider</h4>
+<div class="paragraph _abstract">
+<p>You must configure the provider to allow Terraform to reference and manage a subset of Ansible Automation Platform resources.</p>
+</div>
+<div class="paragraph">
+<p>The provider configuration belongs in the root module of a Terraform configuration. Child modules receive their provider configurations from the root module.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have installed and configured <a href="https://developer.hashicorp.com/terraform/enterprise">Terraform Enterprise or HCP Terraform</a>.</p>
+</li>
+<li>
+<p>You have installed the latest release version of <code>terraform-provider-aap</code> from the <a href="https://registry.terraform.io/providers/ansible/aap/latest">Terraform registry</a>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The default latest version on the Terraform registry might be a pre-release version (such as 1.2.3-beta). Select a supported release version, which uses a 1.2.3 format without dashes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>You have created a username and password or an API token for Ansible Automation Platform. Environment variables are also supported.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Token authentication is recommended because users can manage tokens for specific integrations (such as Terraform), limit token access, and have full control over token lifecycle.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create a Terraform configuration (<code>.tf</code>) file. Include a <code>provider</code> block. The name given in the block header is the <a href="https://developer.hashicorp.com/terraform/language/providers/requirements#local-names">local name</a> of the provider to configure. This provider should already be included in a <a href="https://registry.terraform.io/providers/ansible/aap/latest/docs"><code>required_providers</code> block</a>.</p>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre># This example creates an inventory named `My new inventory`
+# and adds a host `tf_host` and a group `tf_group` to it,
+# and then launches a job based on the "Demo Job Template"
+# in the "Default" organization using the inventory created.
+#
+terraform {
+  required_providers {
+    aap = {
+      source = "ansible/aap"
+    }
+  }
+}
+
+provider "aap" {
+  host     = "https://AAP_HOST"
+  token = "my-aap-token" # Do not record credentials directly in the Terraform configuration. Provide your token using the AAP_TOKEN environment variable.
+}
+
+resource "aap_inventory" "my_inventory" {
+  name         = "My new inventory"
+  description  = "A new inventory for testing"
+  organization = 1
+  variables = jsonencode(
+    {
+      "foo" : "bar"
+    }
+  )
+}
+
+resource "aap_group" "my_group" {
+  inventory_id = aap_inventory.my_inventory.id
+  name         = "tf_group"
+  variables = jsonencode(
+    {
+      "foo" : "bar"
+    }
+  )
+}
+
+resource "aap_host" "my_host" {
+  inventory_id = aap_inventory.my_inventory.id
+  name         = "tf_host"
+  variables = jsonencode(
+    {
+      "foo" : "bar"
+    }
+  )
+  groups = [aap_group.my_group.id]
+}
+
+data "aap_job_template" "demo_job_template" {
+  name              = "Demo Job Template"
+  organization_name = "Default"
+}
+
+  # In order for passing the inventory id to the job template execution, the Inventory on the job template needs to be set to "prompt on launch"
+resource "aap_job" "my_job" {
+  inventory_id    = aap_inventory.my_inventory.id
+  job_template_id = aap_job_template.demo_job_template.id
+
+  # This resource creation needs to wait for the host and group to be created in the inventory
+  depends_on = [
+    aap_host.my_host,
+    aap_group.my_group
+  ]
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the configuration arguments, as shown in the previous example. You must configure the host and credentials. A full list of supported schema is available on the <a href="https://registry.terraform.io/providers/ansible/aap/latest/docs">Terraform registry</a> for your <code>aap</code> provider release version.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>host</code>:</strong> (String) AAP server URL. Can also be configured using the <code>AAP_HOST</code> environment variable.</p>
+</li>
+<li>
+<p><strong><code>insecure_skip_verify</code>:</strong> (Boolean) If <code>true</code>, configures the provider to skip TLS certificate verification. Can also be configured by setting the <code>AAP_INSECURE_SKIP_VERIFY</code> environment variable.</p>
+</li>
+<li>
+<p><strong><code>password</code>:</strong> (String, Case Sensitive) Password to use for basic authentication. Ignored if the token is set. Note that hardcoded credentials are not recommended for security reasons. It is a best practice to use the <code>AAP_PASSWORD</code> environment variable instead.</p>
+</li>
+<li>
+<p><strong><code>timeout</code>:</strong> (Number) Timeout specifies a time limit for requests made to the AAP server. Defaults to 5 if not provided. A timeout of zero means no timeout. Can also be configured by setting the <code>AAP_TIMEOUT</code> environment variable.</p>
+</li>
+<li>
+<p><strong><code>token</code>:</strong> (String, Case Sensitive): Token to use for token authentication. Note that hardcoded credentials are not recommended for security reasons. It is a best practice to use the <code>AAP_TOKEN</code> environment variable instead.</p>
+</li>
+<li>
+<p><strong><code>username</code>:</strong> (String) Username to use for basic authentication. Ignored if the token is set. Can also be configured by setting the <code>AAP_USERNAME</code> environment variable.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(Optional) You can use <a href="https://developer.hashicorp.com/terraform/language/expressions">expressions</a> in the values of these configuration arguments, but can only reference values that are known before the configuration is applied.</p>
+</li>
+<li>
+<p>(Optional) You can also use an <a href="https://developer.hashicorp.com/terraform/language/providers/configuration#alias-multiple-provider-configurations"><code>alias</code> meta-argument</a> that is defined by Terraform and is available for all provider blocks. <code>alias</code> lets you use the same provider with different configurations for different resources.</p>
+</li>
+</ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/controller-inventories#proc-controller-inv-source-terraform">Terraform State</a></p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/access_management_and_authentication/gw-token-based-authentication#proc-controller-apps-create-tokens">Adding tokens (2.5 and later)</a></p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-users#proc-controller-user-tokens">Creating tokens for a user (2.4)</a></p>
+</li>
+<li>
+<p><a href="https://developer.hashicorp.com/terraform/language/meta-arguments/module-providers">The Module providers Meta-Argument</a></p>
+</li>
+<li>
+<p><a href="https://developer.hashicorp.com/terraform/language/modules/develop/providers">Module Development: Providers Within Modules</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="terraform-using-tf-actions">1.4.2. Using TF Actions and Ansible Automation Platform</h4>
+<div class="paragraph _abstract">
+<p>Use Terraform (TF) Actions with Ansible Automation Platform to trigger automated configuration after your infrastructure is provisioned.</p>
+</div>
+<div class="sect4">
+<h5 id="about-tf-actions-and-aap">About Terraform Actions and Ansible Automation Platform</h5>
+<div class="paragraph _abstract">
+<p>The Terraform (TF) Actions adds an imperative <code>action</code> block to the HCL language, letting you execute steps after infrastructure is provisioned without leaving the declarative Terraform workflow. This keeps the entire infrastructure and configuration process visible in your Terraform configuration.</p>
+</div>
+<div class="paragraph">
+<p>TF Actions can be used to trigger Ansible automation for configuration management, such as sending an event and payload to Ansible Automation Platform to configure newly provisioned virtual machines.</p>
+</div>
+<div class="paragraph">
+<p>There are two actions implemented with the Terraform provider for Ansible Automation Platform:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Launch a job directly:</strong> Runs the job as a direct, immediate execution request to Ansible Automation Platform. You must explicitly define which specific Ansible Automation Platform job template the TF Action should call.</p>
+</li>
+<li>
+<p><strong>Use Event-Driven Ansible:</strong> Sends an event to Ansible Automation Platform, which then uses rulebooks to intelligently decide which playbook to run based on the event&#8217;s payload. This allows for more dynamic, scalable and reactive automation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="terraform-provider-tf-actions-direct-job">Using TF Actions as a direct job</h5>
+<div class="paragraph _abstract">
+<p>When you use TF Actions to launch jobs directly with Ansible Automation Platform, the process is streamlined and sequential.</p>
+</div>
+<div class="paragraph">
+<p>The benefit of this approach is a clean, predictable state: the Ansible job launches during the Terraform apply cycle, and Terraform receives a clear, binary status. Note that each change launches a separate job with identical configuration.</p>
+</div>
+<div class="paragraph">
+<p>This method can be useful when you want to execute Ansible automation against newly provisioned servers. For example, last mile provisioning or applying a routine security patching job on a new host.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have configured the AAP Terraform provider to authenticate with Ansible Automation Platform.</p>
+</li>
+<li>
+<p>You have configured the AWS Terraform provider to <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration">authenticate with Amazon Web Services</a>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The example below uses Amazon Web Services (AWS) and requires an AWS account that might incur charges. You can adapt the pattern to use a different cloud provider.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>You have job templates configured with:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Inventory set to <strong>prompt on launch</strong>.</p>
+</li>
+<li>
+<p>A machine credential (private key) matching a public key available in a local file.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Define the <code>aap_job_launch</code> action in your <code>*.tf</code> file.</p>
+</li>
+<li>
+<p>Add a lifecycle job block to define which action will be invoked during the proper lifecycle event trigger.</p>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~&gt; 6.0"
+    }
+
+    aap = {
+      source  = "ansible/aap"
+      version = "~&gt; 1.4.0"
+    }
+  }
+}
+
+provider "aap" {
+  # Configure authentication as needed.
+}
+
+provider "aws" {
+  region = "us-west-1"
+  # Configure authentication as needed.
+}
+
+variable "public_key_path" {
+  type        = string
+  description = "Local path to a public key file to inject into the VM. Your AAP Job Template must have the matching private key configured as a machine credential."
+}
+
+resource "aws_key_pair" "key_pair" {
+  key_name   = "aap-terraform-actions-demo-key"
+  public_key = file(var.public_key_path)
+}
+
+data "aws_ami" "rhel_ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["RHEL-9*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["309956199498"] # Red Hat
+}
+
+resource "aws_instance" "instance" {
+  ami                         = data.aws_ami.rhel_ami.id
+  instance_type               = "t2.micro"
+  associate_public_ip_address = true
+  key_name                    = aws_key_pair.key_pair.key_name
+}
+
+# Look up Organization ID
+
+data "aap_organization" "organization" {
+  name = "Default"
+}
+
+# Create an inventory
+
+resource "aap_inventory" "inventory" {
+  name         = "Actions Demo Inventory"
+  organization = data.aap_organization.organization.id
+}
+
+data "aap_job_template" "job_template" {
+  name              = "Demo Job Template"
+  organization_name = data.aap_organization.organization.name
+}
+
+#
+# Direct job launch action example
+#
+
+resource "aap_host" "host" {
+  inventory_id = aap_inventory.inventory.id
+  name         = resource.aws_instance.instance.public_ip
+  # Setting a value of 10 for SSH retries because terraform will mark the
+  # instance 'created' before it is ready to accept connections from Ansible.
+  variables = jsonencode(
+    {
+      "ansible_ssh_retries" : 10
+    }
+  )
+  # Configure a job launch after the host is created in inventory
+  lifecycle {
+    action_trigger {
+      events  = [after_create]
+      actions = [action.aap_job_launch.job_launch]
+    }
+  }
+}
+
+action "aap_job_launch" "job_launch" {
+  config {
+    inventory_id        = aap_inventory.inventory.id
+    job_template_id     = data.aap_job_template.job_template.id
+    wait_for_completion = true
+  }
+}</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>(Required) Change the job template name and the inventory name in this example to your corresponding variables.</p>
+</li>
+<li>
+<p>(Optional) You can set <code>owners</code> to the Red Hat RHEL image ID so that the latest image is used each time the job runs.</p>
+</li>
+<li>
+<p>(Optional) Set <a href="https://registry.terraform.io/providers/ansible/aap/latest">additional parameters</a> as needed. For example, you can set <code>wait_for_completion</code> to <code>true</code>, then Terraform will wait until this job is created and reaches any final state before continuing. You can also set <code>wait_for_completion_timeout_seconds</code> to control the timeout limit.</p>
+</li>
+<li>
+<p>Update and commit the Terraform code.</p>
+</li>
+<li>
+<p>Execute the Terraform plan and apply it.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="terraform-using-tf-actions-eda">Using TF Actions with Event-Driven Ansible</h5>
+<div class="paragraph _abstract">
+<p>Event-Driven Ansible is an automation feature that allows Ansible Automation Platform to react to real-time events, instead of being triggered on a schedule or by a manual request.</p>
+</div>
+<div class="sect5">
+<h6 id="terraform-provider-configuring-event-stream">Configuring an event stream</h6>
+<div class="paragraph _abstract">
+<p>To use TF Actions with Event-Driven Ansible, you must first configure the event stream in Ansible Automation Platform. TF actions will post events to this stream.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>You have configured the AAP Terraform provider to authenticate with Ansible Automation Platform.</p>
+</li>
+<li>
+<p>You have configured the AWS Terraform provider to <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration">authenticate with Amazon Web Services</a>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The example below uses Amazon Web Services (AWS) and requires an AWS account that might incur charges. You can adapt the pattern to use a different cloud provider.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You have an Ansible Automation Platform inventory named <strong>EDA Actions Demo Inventory</strong> in the <strong>Default</strong> organization.</p>
+</div>
+<div class="paragraph">
+<p>You have job templates configured with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Inventory set to <strong>EDA Actions Demo Inventory</strong>.</p>
+</li>
+<li>
+<p>A machine credential (private key) matching a public key available in a local file.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to the Ansible Automation Platform user interface.</p>
+</li>
+<li>
+<p>Navigate to <strong><span class="menuseq"><b class="menu">Automation Decisions</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Event Streams</b></span></strong>.</p>
+</li>
+<li>
+<p>Click <b class="button">Create event stream</b>.</p>
+</li>
+<li>
+<p>On the <strong>Create event stream</strong> page, edit the fields:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name:</strong> A descriptive, unique name for your event stream (such as <code>Terraform provider_Events</code>).</p>
+</li>
+<li>
+<p><strong>Organization:</strong> Select the organization this event stream will belong to (usually <code>Default</code> or your specific organization).</p>
+</li>
+<li>
+<p><strong>Event stream type:</strong> Select the type that matches how you want to receive events. <strong>Basic Event Stream</strong> (username/password) is supported with this integration.</p>
+</li>
+<li>
+<p><strong>Credential:</strong> Select a credential that you have pre-created for authentication with this event stream.</p>
+</li>
+<li>
+<p><strong>Headers:</strong> (Optional) Enter comma-separated HTTP header keys that you want to include in the event payload that gets forwarded to the rulebook. Leave this empty to include all headers.</p>
+</li>
+<li>
+<p><strong>Forward events to rulebook activation:</strong> This option is typically enabled by default. Disabling it is useful for testing and diagnosing your connection and incoming data without inadvertently triggering any automation.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <b class="button">Create event stream</b>. Then navigate to <strong><span class="menuseq"><b class="menu">Automation Decisions</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Event Streams</b></span></strong> to verify the event stream was created and see the number of events received so far.</p>
+<div class="paragraph">
+<p>You can also click on the specific stream to see its detailed configuration, including the organization, event stream type, associated credential, and event forwarding settings.</p>
+</div>
+</li>
+<li>
+<p>Set up a <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_decisions/eda-rulebook-activations#eda-set-up-rulebook-activation">rule book activation</a>. Make sure to:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Add the event stream to the rulebook.</p>
+</li>
+<li>
+<p>(Recommended) Select the <strong>Rulebook activation enabled?</strong> option to automatically start the activation after creation.</p>
+</li>
+<li>
+<p>Activate the rulebook.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Select <strong><span class="menuseq"><b class="menu">Automation Decisions</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Rulebook Activations</b></span></strong> to verify that the rulebook is active and check its status.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect5">
+<h6 id="terraform-provider-configuring-tf-actions">Configuring TF Actions</h6>
+<div class="paragraph _abstract">
+<p>To connect the event stream to Terraform actions, you configure the main TF file (<code>*.tf</code>) in Terraform.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Add a lifecycle block to call the Event-Driven Ansible event stream to your <code>*.tf</code> file. The <code>after_create</code> action will trigger the <code>action.aap_eda_eventstream_post.create</code>.</p>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="paragraph">
+<p>The following example shows a <code>lifecycle</code> block added to the provisioning of an AWS EC2 server. After the new server is provisioned, the action runs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~&gt; 6.0"
+    }
+
+    aap = {
+      source  = "ansible/aap"
+      version = "~&gt; 1.4.0"
+    }
+  }
+}
+
+provider "aap" {
+  # Configure authentication as needed.
+}
+
+provider "aws" {
+  region = "us-west-1"
+  # Configure authentication as needed.
+}
+
+variable "public_key_path" {
+  type        = string
+  description = "Local path to a public key file to inject into the VM. Your AAP Job Template must have the matching private key configured as a machine credential."
+}
+
+variable "event_stream_username" {
+  type = string
+}
+
+variable "event_stream_password" {
+  type = string
+}
+
+resource "aws_key_pair" "key_pair" {
+  key_name   = "aap-terraform-actions-demo-key"
+  public_key = file(var.public_key_path)
+}
+
+data "aws_ami" "rhel_ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["RHEL-9*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["309956199498"] # Red Hat
+}
+
+resource "aws_instance" "instance" {
+  ami                         = data.aws_ami.rhel_ami.id
+  instance_type               = "t2.micro"
+  associate_public_ip_address = true
+  key_name                    = aws_key_pair.key_pair.key_name
+}
+
+# Look up an inventory
+
+data "aap_inventory" "inventory" {
+  name              = "EDA Actions Demo Inventory"
+  organization_name = "Default"
+}
+
+#
+# EDA Event launch action example
+#
+
+resource "aap_host" "host" {
+  inventory_id = data.aap_inventory.inventory.id
+  name         = resource.aws_instance.instance.public_ip
+  # Configure an EDA eventstream POST after the host is created in inventory
+  lifecycle {
+    action_trigger {
+      events  = [after_create]
+      actions = [action.aap_eda_eventstream_post.event_post]
+    }
+  }
+}
+
+data "aap_eda_eventstream" "eventstream" {
+  name = "TF Actions Event Stream"
+}
+
+action "aap_eda_eventstream_post" "event_post" {
+  config {
+    limit             = "all"
+    template_type     = "job"
+    job_template_name = "Demo Job Template"
+    organization_name = "Default"
+    event_stream_config = {
+      username = var.event_stream_username
+      password = var.event_stream_password
+      url      = data.aap_eda_eventstream.eventstream.url
+    }
+  }
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Required) Configure the following parameters:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>event_stream_config</code>:</strong> (Attributes) Details for the Event-Driven Ansible event stream. You must include:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>username</code>:</strong> (String) Username to use when performing the POST to the event stream URL</p>
+</li>
+<li>
+<p><strong><code>password</code>:</strong> (String) Password to use when performing the POST to the event stream URL</p>
+</li>
+<li>
+<p><strong><code>url</code>:</strong> (String) URL to receive the event POST</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong><code>limit</code>:</strong> (String) Ansible Automation Platform limit for job execution</p>
+</li>
+<li>
+<p><strong><code>organization_name</code>:</strong> (String) Organization name</p>
+</li>
+<li>
+<p><strong><code>template_type</code>:</strong> (String) Template type: either <code>job</code> or <code>workflow_job</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>(Optional) You can set <code>owners</code> to the Red Hat RHEL image ID so that the latest image is used each time the job runs.</p>
+</li>
+<li>
+<p>(Optional) Set <a href="https://registry.terraform.io/providers/ansible/aap/latest/docs/actions/eda_eventstream_post">additional parameters</a> as needed.</p>
+</li>
+<li>
+<p>Configure an action integration with event payload specifications and target rulebook mapping.</p>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Dispatch TF Workflow Job Template Action
+      condition: event.payload.template_type == "workflow"
+      throttle:
+        once_after: 1 minute
+        group_by_attributes:
+          - event.payload.workflow_template_name
+          - event.payload.limit
+          - event.payload.organization_name
+      actions:
+        - debug:
+            msg: "Executing Workflow Template {{ event.payload.workflow_template_name }}"
+        - run_workflow_template:
+            name: "{{ event.payload.workflow_template_name }}"
+            organization: "{{ event.payload.organization_name }}"
+        - debug:
+            msg: "Executed Workflow Job Template {{ event.payload.workflow_template_name }}"</pre>
+</div>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://registry.terraform.io/providers/ansible/aap/latest/docs">Terraform provider documentation</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=6Btyq31la1E">IBM Hashicorp YouTube Demo</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="terraform-provider-creating-applying-plan">Creating and applying the plan</h6>
+<div class="paragraph _abstract">
+<p>After you configure your Terraform plan to include Event-Driven Ansible events, you create and apply the plan to trigger the events.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Run <code>terraform init</code> to initialize your working directory.</p>
+</li>
+<li>
+<p>Use <code>terraform plan</code> to commit to create the plan. The following example also saves the plan to a file named <code>tfplan.out</code>, but you can specify any name for the plan. Saving the plan is a best practice for automation because the saved plan is strictly enforced.</p>
+<div class="listingblock">
+<div class="content">
+<pre>terraform plan -out=tfplan.out</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Review the plan output.</p>
+</li>
+<li>
+<p>Apply the saved plan.</p>
+<div class="listingblock">
+<div class="content">
+<pre>terraform apply tfplan.out</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This creates and sends an event to the specified event stream. As each resource is created, TF actions are invoked and the corresponding Ansible Automation Platform playbooks are executed sequentially.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Verification</div>
+<ol class="arabic">
+<li>
+<p>Verify that the runs are updated in the Terraform user interface. Drill down on a resource to see that the action was invoked and a post event was executed.</p>
+</li>
+<li>
+<p>From the Ansible Automation Platform user interface, verify that the event is successfully received by (EDAName} and triggers the appropriate rulebook activation:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Check the <strong>Event Streams</strong> dashboard to see the TF Actions events were received.</p>
+</li>
+<li>
+<p>Check the <strong>Jobs</strong> dashboard to see the jobs running sequentially and with a <strong>Success</strong> status.</p>
+</li>
+<li>
+<p>Check the <strong>Inventory</strong> dashboard to see the updates. For example, if you created new servers, check the <strong>Hosts</strong> tab for the Terraform provisioned inventory.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://developer.hashicorp.com/terraform/cli/run">Terraform workflow for provisioning infrastructure</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="example-rulebook">Example rulebook</h6>
+<div class="paragraph _abstract">
+<p>The following rulebook example shows how to use TF actions and Event-Driven Ansible to listen for events on a webhook.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Listen for events on a webhook
+  hosts: all
+
+  ## Define our source for events
+
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+      filters:
+        - ansible.eda.insert_hosts_to_meta:
+            host_path: payload.limit
+
+  ## Define the conditions we are looking for
+
+  rules:
+    - name: Dispatch TF Job Template Action
+      condition: event.payload.template_type == "job"
+      throttle:
+        once_after: 1 minute
+        group_by_attributes:
+          - event.payload.job_template_name
+          - event.payload.limit
+          - event.payload.organization_name
+      actions:
+        - debug:
+            msg: "Executing Job Template {{ event.payload.job_template_name }}"
+        - run_job_template:
+            name: "{{ event.payload.job_template_name }}"
+            organization: "{{ event.payload.organization_name }}"
+        - debug:
+            msg: "Executed Job Template {{ event.payload.job_template_name }}"
+    - name: Dispatch TF Workflow Job Template Action
+      condition: event.payload.template_type == "workflow"
+      throttle:
+        once_after: 1 minute
+        group_by_attributes:
+          - event.payload.workflow_template_name
+          - event.payload.limit
+          - event.payload.organization_name
+      actions:
+        - debug:
+            msg: "Executing Workflow Template {{ event.payload.workflow_template_name }}"
+        - run_workflow_template:
+            name: "{{ event.payload.workflow_template_name }}"
+            organization: "{{ event.payload.organization_name }}"
+        - debug:
+            msg: "Executed Workflow Job Template {{ event.payload.workflow_template_name }}"</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="vault-product">2. Vault integration</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="vault-introduction">2.1. About the Vault integration</h3>
+<div class="paragraph _abstract">
+<p>The integration of Red Hat Ansible Automation Platform and IBM HashiCorp Vault provides fully automated lifecycle management for Vault.</p>
+</div>
+<div class="sect3">
+<h4 id="vault-intro">2.1.1. Introduction</h4>
+<div class="paragraph _abstract">
+<p>Vault lets you centrally store and manage secrets securely. The Ansible Automation Platform certified <code>hashicorp.vault</code> collection provides fully automated lifecycle and operation management for Vault. You can create, update, and delete secrets through playbooks.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Existing <code>community.hashi_vault</code> users:</strong> The <code>hashicorp.vault</code> solution is intended to replace unsupported <code>community.hashi_vault</code> collection. Use the migration path to keep your existing playbooks. For more information about migrating, see
+<a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-migrating-from-community-hashi-vault">Migrating from <code>community.hashi_vault</code></a>.</p>
+</li>
+<li>
+<p><strong>New Vault users:</strong> The <code>hashicorp.vault</code> collection is included in the supported execution environment from automation hub.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Although the <code>hashicorp.vault</code> and <code>hashi.terraform</code> collections work independently of each other and are designed for different tasks, you can use them together in advanced workflows.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="vault-authenticating">2.2. Authenticating to <code>hashicorp.vault</code></h3>
+<div class="paragraph _abstract">
+<p>After you install or migrate to the <code>hashicorp.vault</code> collection, authentication is configured in the Ansible Automation Platform user interface. An administrator creates a custom credential type to authenticate to Vault. Then users create credentials to use with job templates.</p>
+</div>
+<div class="sect3">
+<h4 id="vault-auth-architecture">2.2.1. Authentication architecture</h4>
+<div class="paragraph _abstract">
+<p>The <code>hashicorp.vault</code> collection manages authentication through environment variables and client initialization. This approach enhances security by preventing sensitive credentials from being passed directly as module parameters within playbook tasks.</p>
+</div>
+<div class="paragraph">
+<p>The <code>hashicorp.vault</code> collection injects credentials into job templates with environment variables, so you get simpler, cleaner task definitions while ensuring that authentication details remain secure.</p>
+</div>
+<div class="paragraph">
+<p>The following authentication types are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>appRole authentication:</strong> Use either one of the following methods when using appRole authentication:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Set the <code>VAULT_APPROLE_ROLE_ID</code> and <code>VAULT_APPROLE_SECRET_ID</code> environment variables. When you use environment variables, you must also create a custom credential type and credentials that will be passed to the job template.</p>
+</li>
+<li>
+<p>Directly pass the <code>role_id</code> and <code>secret_id</code> parameters to the tasks, for example:</p>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Create a secret with AppRole authentication
+  hashicorp.vault.kv2_secret:
+    url: https://vault.example.com:8200
+    auth_method: approle
+    role_id: "{{ vault_role_id }}"
+    secret_id: "{{ vault_secret_id }}"
+    path: myapp/config
+    data:
+      api_key: secret-api-key</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Token authentication:</strong> Set the <code>VAULT_TOKEN</code> environment variable.</p>
+<div class="paragraph">
+<p>Optionally, you can configure parameters for the token. If parameters are not provided, then the module uses environment variables.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="vault-creating-credential-type">2.2.2. Creating a custom credential type</h4>
+<div class="paragraph _abstract">
+<p>As an admin, you create a secure credential type in Ansible Automation Platform, which is used to authenticate to Vault.</p>
+</div>
+<div class="paragraph">
+<p>You can configure role-based (appRole) authentication or allow users to directly provide a token.</p>
+</div>
+<div class="paragraph">
+<div class="title">Prerequisites</div>
+<p>Do <em>one</em> of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>New users:</strong> Install the Ansible Automation Platform certified <code>hashicorp.vault</code> collection from <a href="https://www.redhat.com/en/technologies/management/ansible/automation-hub">Automation hub</a>.</p>
+</li>
+<li>
+<p><strong><code>community.hashi_vault</code> collection users:</strong> Migrate from <code>community.hashi_vault</code>. For more information, see <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-migrating-from-community-hashi-vault">Migrating from <code>community.hashi_vault</code></a>.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to Ansible Automation Platform.</p>
+</li>
+<li>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Credential Types</b></span></strong>.</p>
+</li>
+<li>
+<p>Click <b class="button">Create a credential type</b>. The <strong>Create Credential Type</strong> page opens.</p>
+</li>
+<li>
+<p>Enter a name and a description in the corresponding fields.</p>
+</li>
+<li>
+<p>If you want to configure token authentication for individual users:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>For <strong>Input configuration</strong>, enter:</p>
+<div class="listingblock">
+<div class="content">
+<pre>fields:
+ - id: vault_token
+   type: string
+   label: Hashicorp Vault Token
+   secret: true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>For <strong>Injector configuration</strong>, enter:</p>
+<div class="listingblock">
+<div class="content">
+<pre>env:
+   VAULT_TOKEN: '{{ vault_token }}'</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If you want to configure appRole authentication using <code>role_id</code> and <code>secret_id</code>:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>For <strong>Input configuration</strong>, enter:</p>
+<div class="listingblock">
+<div class="content">
+<pre>fields:
+  - id: vault_approle_role_id
+    type: string
+    label: Hashicorp Vault appRole Role ID
+    secret: true
+  - id: vault_approle_secret_id
+    type: string
+    label: Hashicorp Vault appRole Secret ID
+    secret: true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>For <strong>Injector configuration</strong>, enter:</p>
+<div class="listingblock">
+<div class="content">
+<pre>env:
+    VAULT_APPROLE_ROLE_ID: '{{ vault_approle_role_id }}'
+    VAULT_APPROLE_SECRET_ID: '{{ vault_approle_secret_id }}'</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <b class="button">Create credential type</b>.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next step</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-creating-custom-credential">Creating a custom credential</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://developer.hashicorp.com/vault/api-docs">Vault API documentation</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="vault-creating-custom-credential">2.2.3. Creating a custom credential</h4>
+<div class="paragraph _abstract">
+<p>Vault users must create a custom credential to use with job templates in Ansible Automation Platform.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisite</div>
+<ul>
+<li>
+<p>Your administrator has created a Vault credential type.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Log in to Ansible Automation Platform.</p>
+</li>
+<li>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="submenu">Infrastructure</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Credentials</b></span></strong>, and then select <b class="button">Create credential</b>.</p>
+</li>
+<li>
+<p>Enter a name and a description in the corresponding fields.</p>
+</li>
+<li>
+<p>(Optional) From the <strong>Organization</strong> list, select an organization.</p>
+</li>
+<li>
+<p>From the <strong>Credential type</strong> list, select a Vault credential type. The fields that display depend on the credential type.</p>
+</li>
+<li>
+<p>Do <em>one</em> of the following:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>For the token authentication, add your Vault token and edit any fields as needed.</p>
+</li>
+<li>
+<p>For the appRole authentication method, enter the IDs in the <strong>appRole Role ID</strong> and <strong>appRole Secret ID</strong> fields. Edit any other fields as needed.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <b class="button">Save credential</b>. You are ready to use the credential in a job template.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="vault-migrating-from-community-hashi-vault">2.3. Migrating from <code>community.hashi_vault</code></h3>
+<div class="paragraph _abstract">
+<p>If you are using the <code>community.hashi_vault</code> collection, you can migrate your existing playbooks to the <code>hashicorp.vault</code> collection.</p>
+</div>
+<div class="sect3">
+<h4 id="vault-kv1-modules">2.3.1. Configuring KV1 modules</h4>
+<div class="paragraph _abstract">
+<p>If you are using KV1 with <code>community.hashi_vault</code> collection, configure the corresponding modules in the <code>hashicorp.vault</code> collection.</p>
+</div>
+<div class="sect4">
+<h5 id="vault-configuring-kv1-secret">Configuring the <code>hashicorp.vault.kv1_secret</code> module</h5>
+<div class="ulist _abstract">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Configuring this module is not required for migration because there are no corresponding modules in <code>community.hashi_vault</code>. However, you might want to configure something other than the defaults for <code>auth_method</code> and <code>state</code> after the migration. You can use the examples on Ansible automation hub for reference.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-configuring-kv1-secret-info">Configuring the <code>hashicorp.vault.kv1_secret_info</code> module</h5>
+<div class="paragraph _abstract">
+<p>The <code>hashicorp.vault.kv1_secret_info</code> module reads KV1 secrets.</p>
+</div>
+<div class="paragraph">
+<p>The corresponding community.hashi_vault modules are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>community.hashi_vault.vault_kv1_get</code>:</strong> Retrieves secrets from the HashiCorp Vault KV version 1 secret store.</p>
+</li>
+<li>
+<p><strong><code>community.hashi_vault.vault_kv1_get lookup</code>:</strong> Retrieves secrets from the HashiCorp Vault KV version 1 secret store.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Replicate the <code>community.hashi_vault modules</code> to the following <code>hashicorp.vault.kv1_secret_secret_info</code> parameters.</p>
+<div class="listingblock">
+<div class="content">
+<pre>  engine_mount_point:
+    description: KV secrets engine mount point.
+    default: secret
+    type: str
+    aliases: [secret_mount_path]
+  path:
+    description:
+      - Specifies the path of the secret.
+    required: true
+    type: str
+    aliases: [secret_path]
+extends_documentation_fragment:
+  - hashicorp.vault.vault_auth.modules</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Required) Configure the <code>path</code> parameter. This is
+the path to the secret in the <code>community.hashi_vault.hashi_vault</code> modules. <strong>Alias:</strong> <code>secret_path</code></p>
+</li>
+<li>
+<p>If needed, configure the <a href="https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/vault/docs/">optional parameters</a>.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next step</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-configuring-kv1-secret-get-lookup">Configuring the <code>hashicorp.vault.kv1_secret_get</code> lookup plugin</a>.</p>
+</li>
+</ul>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-migration-examples-kv1-secret-info">Migration examples for the <code>hashicorp.vault.kv1_secret_info</code> module</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-configuring-kv1-secret-get-lookup">Configuring the <code>hashicorp.vault.kv1_secret_get</code> lookup plugin</h5>
+<div class="paragraph _abstract">
+<p>The <code>hashicorp.vault.kv1_secret_get</code> lookup plugin module reads KV1 secrets.</p>
+</div>
+<div class="paragraph">
+<p>The corresponding <code>community.hashi_vault</code> modules are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>community.hashi_vault.hashi_vault</code>:</strong> Retrieves secrets from HashiCorp Vault.</p>
+</li>
+<li>
+<p><strong><code>community.hashi_vault.vault_kv1_get lookup</code>:</strong> Gets secrets from the HashiCorp Vault KV version 1 secret store.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Replicate <code>the community.hashi_vault</code> modules to the following <code>hashicorp.vault.kv1_secret_get</code> parameters.</p>
+<div class="listingblock">
+<div class="content">
+<pre>auth_method:
+  description: Authentication method to use.
+  choices: ['token', 'approle']
+  default: token
+  type: str
+engine_mount_point:
+  description:
+    - The KV secrets engine mount point.
+  default: secret
+  type: str
+  aliases: ['mount_point', 'secret_mount_path']
+secret:
+  description:
+    - The Vault path to the secret being requested.
+  required: true
+  type: str
+  aliases: ['secret_path']</pre>
+</div>
+</div>
+</li>
+<li>
+<p>(Required) Configure the secret parameter. This maps to secret in the <code>community.hashi_vault.hashi_vault</code> modules. <strong>Alias:</strong> <code>secret_path</code></p>
+</li>
+<li>
+<p>If needed, configure the <a href="https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/vault/docs/">optional parameters</a>.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next step</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-creating-a-credential-type">Creating a credential type</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-migration-examples-kv1-secret-get-lookup">Migration examples for the <code>hashicorp.vault.kv1_secret_get</code> lookup plugin</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-migration-examples-kv1-secret-info">Migration example for the <code>hashicorp.vault.kv1_secret_info</code> module</h5>
+<div class="paragraph _abstract">
+<p>The following example shows before and after configurations for the <code>hashicorp.vault.kv1_secret_info</code> module.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (community.hashi_vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Read a kv1 secret from Vault (community collection)
+  community.hashi_vault.vault_kv1_get:
+    url: https://vault:8201
+    token: "{{ vault_token }}"
+    path: hello
+  register: response</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (hashicorp.vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Read a kv1 secret from Vault (hashicorp.vault collection)
+  hashicorp.vault.kv1_secret_info:
+    url: https://vault.example.com:8201
+    token: "{{ vault_token }}"
+    path: sample</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-migration-examples-kv1-secret-get-lookup">Migration example for the <code>hashicorp.vault.kv1_secret_get</code> lookup</h5>
+<div class="paragraph _abstract">
+<p>The following example shows the KV1 secret get lookup.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (community.hashi_vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Retrieve a secret from the Vault
+  ansible.builtin.debug:
+    msg: "{{ lookup('community.hashi_vault.vault_kv1_get', 'hello', url='https://vault:8201') }}"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (hashicorp.vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Retrieve a secret from the Vault
+  ansible.builtin.debug:
+    msg: "{{ lookup('hashicorp.vault.kv1_secret_get',
+                    secret='hello',
+                    url='https://myvault_url:8201') }}"</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="vault-kv2-modules">2.3.2. Configuring KV2 modules</h4>
+<div class="paragraph _abstract">
+<p>If you are using KV2 with <code>community.hashi_vault</code> collection, configure the corresponding modules in the <code>hashicorp.vault</code> collection.</p>
+</div>
+<div class="sect4">
+<h5 id="vault-configuring-kv2-secret">Configuring the <code>hashicorp.vault.kv2_secret</code> module</h5>
+<div class="paragraph _abstract">
+<p>The <code>hashicorp.vault.kv2_secret</code> module performs Create, Update, and Delete (CRUD) operations on KV2 secrets through a unified interface.</p>
+</div>
+<div class="paragraph">
+<p>The corresponding <code>community.hashi_vault</code> modules are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>community.hashi_vault.vault_kv2_write</code></strong> - Write KV2 secrets.</p>
+</li>
+<li>
+<p><strong><code>community.hashi_vault.vault_kv2_delete</code></strong> - Delete KV2 secrets.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>Install the Ansible Automation Platform certified <code>hashicorp.vault</code> collection.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Replicate your automation tasks from both of the <code>community.hashi_vault</code> modules to the following <code>hashicorp.vault.kv2_secret</code> parameters.  The <code>hashicorp.vault.kv2_secret</code> parameters are similar to <code>community.hashi_vault</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>auth_method:
+ description: Authentication method to use
+ type: str
+ choices: [token, approle]
+ default: token
+ required: false
+
+cas:
+ description: Perform a check-and-set operation.
+ type: int
+ required: false
+
+data:
+ description: KV2 secret data to write.
+ type: dict
+ required: true
+
+engine_mount_point:
+ description: The path where the secret backend is mounted.
+ type: str
+ default: secret
+ required: false
+ aliases: [secret_mount_path]
+
+namespace:
+ description: Vault namespace where secrets reside.
+ type: str
+ default: admin
+ aliases: [vault_namespace]
+
+path:
+ description: Vault KVv2 path to be written to.
+ type: str
+ required: true
+ aliases: [secret_path]
+
+url:
+ description: URL of the Vault service
+ type: str
+ aliases: [vault_address]
+ required: true
+
+versions:
+ description: One or more versions of the secret to delete.
+ type: list of int
+ required: false
+
+state:
+ description: Desired state of the secret
+ type: str
+ choices: [present, absent]
+ default: present</pre>
+</div>
+</div>
+</li>
+<li>
+<p>You must add the <code>state</code> parameter to the <code>hashicorp.vault.kv2_secret</code> module, as shown above. Valid options are:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>present</code>:</strong> This is the equivalent of <code>create</code> or <code>update</code> in the <code>community.hashi_vault.vault_kv2</code> modules.</p>
+</li>
+<li>
+<p><strong><code>absent</code>:</strong> This is the equivalent of <code>delete secret</code> in the <code>community.hashi_vault.vault_kv2</code> modules.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next step</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-configuring-kv2-secret-info">Configuring the <code>hashicorp.vault.kv2_secret_info</code> module</a>.</p>
+</li>
+</ul>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-migration-examples-kv2-secret-module">Migration examples for the <code>hashicorp.vault.kv2_secret</code> module</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-configuring-kv2-secret-info">Configuring the <code>hashicorp.vault.kv2_secret_info</code> module</h5>
+<div class="paragraph _abstract">
+<p>The <code>hashicorp.vault.kv2_secret_info</code> module reads KV2 secrets.</p>
+</div>
+<div class="paragraph">
+<p>The corresponding <code>community.hashi_vault</code> module is:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>community.hashi_vault.vault_kv2_get</code>:</strong> Gets secrets from the HashiCorp Vault KV version 2 secret store.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Replicate the <code>community.hashi_vault</code> modules to the following <code>hashicorp.vault.kv2_secret_info</code> parameters.</p>
+<div class="listingblock">
+<div class="content">
+<pre>  engine_mount_point:
+    description: KV secrets engine mount point.
+    default: secret
+    type: str
+    aliases: [secret_mount_path]
+  path:
+    description: Path to the secret.
+    required: true
+    type: str
+    aliases: [secret_path]
+  version:
+    description: The version to retrieve.
+    type: int
+extends_documentation_fragment:
+  - hashicorp.vault.vault_auth.modules</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the required parameters:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>path</code>:</strong> The path where the secret is located in the community.<code>hashi_vault.hashi_vault</code> modules. <strong>Alias:</strong> <code>secret_path</code></p>
+</li>
+<li>
+<p><strong><code>url</code>:</strong> Maps to <code>url</code> in the <code>community.hashi_vault.hashi_vault</code> modules. Uses the same aliases as <code>vault_address</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If needed, configure the <a href="https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/vault/content/module/kv2_secret_info/">optional parameters</a>.</p>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next step</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-configuring-kv2-secret-get-lookup">Configuring the <code>hashicorp.vault.kv2_secret_get</code> lookup plugin</a>.</p>
+</li>
+</ul>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-migration-examples-kv2-secret-info">Migration examples for the <code>hashicorp.vault.kv2_secret_info</code> module</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-configuring-kv2-secret-get-lookup">Configuring the <code>hashicorp.vault.kv2_secret_get</code> lookup plugin</h5>
+<div class="paragraph _abstract">
+<p>The <code>hashicorp.vault.kv2_secret_get</code> lookup plugin module reads KV2 secrets.</p>
+</div>
+<div class="paragraph">
+<p>The corresponding <code>community.hashi_vault</code> modules are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>community.hashi_vault.hashi_vault</code>:</strong> Retrieves secrets from HashiCorp Vault.</p>
+</li>
+<li>
+<p><strong><code>community.hashi_vault.vault_kv2_get</code> lookup:</strong> Gets secrets from the HashiCorp Vault KV version 2 secret store.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Replicate the <code>community.hashi_vault</code> modules to the following <code>hashicorp.vault.kv2_secret_get</code> parameters.</p>
+<div class="listingblock">
+<div class="content">
+<pre>auth_method:
+ description: Authentication method to use
+ type: str
+ choices: [token, approle]
+ default: token
+ required: false
+
+mount_point:
+ description: Vault mount point
+ type: str
+ required: false
+ aliases: [secret_mount_path]
+
+namespace:
+ description: Vault namespace where secrets reside.
+ type: str
+ default: admin
+ aliases: [vault_namespace]
+secret:
+ description: Vault path to the secret being requested in the format path[:field]
+ type: str
+ required: true
+ aliases: [secret_path]
+
+url:
+ description: URL of the Vault service
+ type: str
+ aliases: [vault_address]
+ required: true
+
+version:
+ description: Specifies the version to return. If not set the latest is returned.
+ type: int
+ required: false</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use the following guidance to configure the <code>hashicorp.vault.kv2_secret_get</code> parameters:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>auth_method</code>:</strong> Maps identically to <code>auth_method</code> in the <code>community.hashi_vault.hashi_vault</code> modules.</p>
+</li>
+<li>
+<p><strong><code>mount_point</code>:</strong> Maps to <code>mount_point</code> in the <code>community.hashi_vault.hashi_vault</code> modules. <strong>Alias:</strong> <code>secret_mount_path</code>.</p>
+</li>
+<li>
+<p><strong><code>namespace</code>:</strong> Maps to <code>namespace</code> in the <code>community.hashi_vault.hashi_vault</code> modules. <strong>Alias:</strong> <code>vault_namespace</code>.</p>
+</li>
+<li>
+<p><strong><code>secret</code>:</strong> Maps to <code>secret</code> in the <code>community.hashi_vault.hashi_vault</code> modules.</p>
+</li>
+<li>
+<p><strong><code>url</code>:</strong> Maps to <code>url</code> in the <code>community.hashi_vault.hashi_vault</code> modules. Uses the same aliases as <code>vault_address</code>.</p>
+</li>
+<li>
+<p><strong><code>version</code>:</strong> Maps identically to <code>version</code> in the <code>community.hashi_vault.hashi_vault</code> modules.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="ulist">
+<div class="title">Next step</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-creating-a-credential-type">Creating a credential type</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/getting_started_with_hashicorp_and_ansible_automation_platform/vault-product#vault-migration-examples-kv2-secret-get-lookup">Migration examples for the <code>hashicorp.vault.kv2_secret_get</code> lookup plugin</a>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-migration-examples-kv2-secret-module">Migration examples for the <code>hashicorp.vault.kv2_secret</code> module</h5>
+<div class="paragraph _abstract">
+<p>The following examples show basic before and after configurations for the <code>hashicorp.vault.kv2_secret</code> module.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>KV2 <a href="https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2/cookbook/delete-data">delete operations</a> are <code>soft-delete</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Example 1: Basic Secret Write/Create</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (<code>community.hashi_vault</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Write/create a secret
+  community.hashi_vault.vault_kv2_write:
+    url: https://vault:8200
+    path: hello
+    data:
+      foo: bar</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (<code>hashicorp.vault</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Write/create a secret
+  hashicorp.vault.kv2_secret:
+    url: https://vault:8200
+    path: hello
+    data:
+      foo: bar</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Example 2: Basic Secret Delete</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (<code>community.hashi_vault</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Delete the latest version of the secret/mysecret secret.
+  community.hashi_vault.vault_kv2_delete:
+    url: https://vault:8201
+    path: secret/mysecret</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (<code>hashicorp.vault</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Delete the latest version of the secret/mysecret secret.
+  hashicorp.vault.kv2_secret:
+    url: https://vault:8201
+    path: secret/mysecret
+    state: absent</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Example 3: Secret Delete - specific version</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (<code>community.hashi_vault</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Delete versions 1 and 3 of the secret/mysecret secret.
+  community.hashi_vault.vault_kv2_delete:
+    url: https://vault:8201
+    path: secret/mysecret
+    versions: [1, 3]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (<code>hashicorp.vault</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Delete versions 1 and 3 of the secret/mysecret secret.
+  hashicorp.vault.kv2_secret:
+    url: https://vault:8201
+    path: secret/mysecret
+    versions: [1, 3]
+    state: absent</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-migration-examples-kv2-secret-info">Migration examples for the <code>hashicorp.vault.kv2_secret_info</code> module</h5>
+<div class="paragraph _abstract">
+<p>The following examples show before and after configurations for the <code>hashicorp.vault.kv2_secret_info</code> module.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example 1: Read a secret with token authentication</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (community.hashi_vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Read the latest version of a kv2 secret from Vault  community.hashi_vault.vault_kv2_get:
+    url: https://vault.example.com:8200
+    token: "{{ vault_token }}"
+    path: myapp/config
+  register: response</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (hashicorp.vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Read a secret with token authentication
+  hashicorp.vault.kv2_secret_info:
+    url: https://vault.example.com:8200
+    token: "{{ vault_token }}"
+    path: myapp/config</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Example 2: Read a secret with a specific version</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (community.hashi.vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Read version 5 of a secret from kv2
+  community.hashi_vault.vault_kv2_get:
+    url: https://vault.example.com:8200
+    path: myapp/config
+    version: 5</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (hashicorp.vault)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Read a secret with a specific version
+  hashicorp.vault.kv2_secret_info:
+    url: https://vault.example.com:8200
+    path: myapp/config
+    version: 1</pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="vault-migration-examples-kv2-secret-get-lookup">Migration examples for the <code>hashicorp.vault.kv2_secret_get</code> lookup</h5>
+<div class="paragraph _abstract">
+<p>The following example shows the KV2 secret get lookup for retrieving the latest version.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example:</strong></p>
+</div>
+<div class="paragraph">
+<p>Before (<code>community.hashi_vault</code>)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>- name: Return latest KV v2 secret from path
+  ansible.builtin.debug:
+    msg: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=secret/data/hello
+  token=my_vault_token
+  url=http://myvault_url:8200') }}"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After (<code>hashicorp.vault</code>)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>name: Return latest KV v2 secret from path
+  ansible.builtin.debug:
+    msg: "{{ lookup('hashicorp.vault.kv2_secret_get', 'secret=secret/data/hello
+  url=http://myvault_url:8200') }}"</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2025-10-27 15:52:55 -0400
+</div>
+</div>
+</body>
+</html>
