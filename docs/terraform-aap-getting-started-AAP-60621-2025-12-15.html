@@ -1630,10 +1630,10 @@ resource "aap_job" "my_job" {
 <div class="sect3">
 <h4 id="terraform-provider-create-job-template">1.4.2. Creating a job template</h4>
 <div class="paragraph _abstract">
-<p>WHen you configure Ansible playbooks and job templates, they are stored in Ansible Automation Platform. Playbooks and job templates remain reusable and independent of the specific Terraform configuration that provisioned them.</p>
+<p>When you configure Ansible playbooks and job templates, they are stored in Ansible Automation Platform. Playbooks and job templates remain reusable and independent of the specific Terraform configuration that provisioned them.</p>
 </div>
 <div class="paragraph">
-<p>When you create a job template, many of the fields have a <strong>Prompt on launch</strong> checkbox. When enabled, you will be prompted for the value for that field when the job is launched. Most prompted values override any values set in the job template, though there are <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-job-templates#controller-create-job-template">exceptions</a>.</p>
+<p>When you create a job template, many of the fields have a <strong>Prompt on launch</strong> checkbox. When enabled, you are prompted for the value for that field when the job is launched. Most prompted values override any values set in the job template, though there are <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-job-templates#controller-create-job-template">exceptions</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1643,7 +1643,7 @@ resource "aap_job" "my_job" {
 </td>
 <td class="content">
 <div class="paragraph">
-<p>You can add <code>depends_on</code> to the job templates section of your <code>*.tf</code> trick so that the job does not start until the host is in the inventory.</p>
+<p>You can add <code>depends_on</code> to the job templates section of your <code>*.tf</code> file so that the job does not start until the host is in the inventory.</p>
 </div>
 </td>
 </tr>
@@ -1651,7 +1651,10 @@ resource "aap_job" "my_job" {
 </div>
 <div class="paragraph">
 <div class="title">Prerequisites</div>
-<p>Before you can create a job template, you must:
+<p>Before you can create a job template, you must:</p>
+</div>
+<div class="paragraph">
+<p>+
 * <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-credentials#ref-controller-credential-machine">Create a machine credential type</a>
 * <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-projects#proc-controller-adding-a-project">Add a project</a>
 * <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-inventories">Create an inventory</a>
@@ -1664,7 +1667,7 @@ resource "aap_job" "my_job" {
 <p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Templates</b></span></strong>.</p>
 </li>
 <li>
-<p>On the <strong>Automation Templates</strong> page, select <strong>Create job template</strong> from the <strong>Create template</strong> list.</p>
+<p>from the <strong>Create template</strong> list, select <strong>Create job template</strong> .</p>
 </li>
 <li>
 <p>Enter the appropriate details in the following fields:</p>
@@ -1712,14 +1715,18 @@ resource "aap_job" "my_job" {
 <li>
 <p><strong>Limit</strong>: (Optional) Specify a host pattern to further constrain the list of hosts managed or affected by the playbook. Select <strong>Prompt on launch</strong> to restrict a job template to run against only a specific host or group of hosts within an inventory.</p>
 <div class="paragraph">
-<p>You can separate many patterns by colons (<code>:</code>). As with core Ansible:
-<strong> <code>a:b</code> means "in group a or b"
-</strong> <code>a:b:&amp;c</code> means "in a or b but must be in c"
-** <code>a:!b</code> means "in a, and definitely not in b"</p>
+<p>You can separate many patterns by colons (<code>:</code>). As with core Ansible:</p>
 </div>
-<div class="paragraph">
-<p>+</p>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>a:b</code> means "in group a or b"</p>
+</li>
+<li>
+<p><code>a:b:&amp;c</code> means "in a or b but must be in c"</p>
+</li>
+<li>
+<p><code>a:!b</code> means "in a, and definitely not in b"</p>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1733,6 +1740,9 @@ resource "aap_job" "my_job" {
 </td>
 </tr>
 </table>
+</div>
+</li>
+</ul>
 </div>
 </li>
 </ul>
@@ -1753,7 +1763,8 @@ resource "aap_job" "my_job" {
 <div class="paragraph">
 <p>If you enable webhooks, other fields display, prompting for additional information:</p>
 </div>
-</li>
+<div class="ulist">
+<ul>
 <li>
 <p><strong>Webhook service</strong>: Select which service to listen for webhooks from.</p>
 </li>
@@ -1778,14 +1789,20 @@ resource "aap_job" "my_job" {
 </ul>
 </div>
 </li>
-<li>
-<p>Click <strong>Create job template</strong>, when you have completed configuring the details of the job template.</p>
-<div class="paragraph">
-<p>The template is created and you advance to the <strong>Job Template Details</strong> tab on the job template page.</p>
+</ul>
 </div>
 </li>
 <li>
-<p>Save the template. After saving the template, you can:</p>
+<p>Click <strong>Create job template</strong>, when you have completed configuring the details of the job template.</p>
+<div class="paragraph">
+<p>The template is created and the <strong>Job Template Details</strong> tab is displayed.</p>
+</div>
+</li>
+<li>
+<p>Save the template.</p>
+</li>
+<li>
+<p>After saving the template, you can:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1817,19 +1834,20 @@ resource "aap_job" "my_job" {
 <div class="title">Verification</div>
 <ol class="arabic">
 <li>
-<p>From the navigation panel, select <strong>Automation Execution</strong> &#8594; <strong>Templates</strong>.</p>
+<p>From the navigation panel, select <strong><span class="menuseq"><b class="menu">Automation Execution</b>&#160;<b class="caret">&#8250;</b> <b class="menuitem">Templates</b></span></strong>.</p>
 </li>
 <li>
 <p>Verify that the newly created template is displayed on the <strong>Templates</strong> page.</p>
-<div class="literalblock">
-<div class="content">
-<pre> [role="_additional-resources"]
-.Additional resources
-* link:{URLControllerUserGuide}/controller-job-templates[Job templates]</pre>
-</div>
-</div>
 </li>
 </ol>
+</div>
+<div class="ulist _additional-resources">
+<div class="title">Additional resources</div>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-job-templates">Job templates</a></p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
