@@ -1649,16 +1649,22 @@ resource "aap_job" "my_job" {
 </tr>
 </table>
 </div>
-<div class="paragraph">
+<div class="ulist">
 <div class="title">Prerequisites</div>
-<p>Before you can create a job template, you must:</p>
-</div>
-<div class="paragraph">
-<p>+
-* <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-credentials#ref-controller-credential-machine">Create a machine credential type</a>
-* <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-projects#proc-controller-adding-a-project">Add a project</a>
-* <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-inventories">Create an inventory</a>
-* Updated the <code>terraform.tfvars</code> file with your Ansible Automation Platform credentials (and cloud provider credentials if needed).</p>
+<ul>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-credentials#ref-controller-credential-machine">Create a machine credential type</a></p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-projects#proc-controller-adding-a-project">Add a project</a></p>
+</li>
+<li>
+<p><a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/controller-inventories">Create an inventory</a></p>
+</li>
+<li>
+<p>Update the <code>terraform.tfvars</code> file with your Ansible Automation Platform credentials (and cloud provider credentials if needed).</p>
+</li>
+</ul>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1777,6 +1783,9 @@ resource "aap_job" "my_job" {
 <li>
 <p><strong>Webhook credential</strong>: Optionally, give a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service. Before you can select it, the credential type must exist.</p>
 </li>
+</ul>
+</div>
+</li>
 <li>
 <p><strong>Concurrent jobs</strong>: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see Automation controller capacity determination and job impact.</p>
 </li>
@@ -1785,9 +1794,6 @@ resource "aap_job" "my_job" {
 </li>
 <li>
 <p><strong>Prevent instance group fallback</strong>: Check this option to allow only the instance groups listed in the <strong>Instance Groups</strong> field to run the job. If clear, all available instances in the execution pool are used based on the hierarchy described in Control where a job runs.</p>
-</li>
-</ul>
-</div>
 </li>
 </ul>
 </div>
